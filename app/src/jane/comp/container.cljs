@@ -1,16 +1,19 @@
 
-(ns jane.component.container
+(ns jane.comp.container
   (:require [hsl.core :refer [hsl]]
             [respo.alias :refer [create-comp div span]]
             [jane.style.widget :as widget]
             [jane.style.layout :as layout]
-            [respo.comp.debug :refer [comp-debug]]))
+            [respo.comp.debug :refer [comp-debug]]
+            [respo-ui.style :as ui]
+            [jane.comp.login :refer [comp-login]]))
 
 (defn render [store]
   (fn [state mutate!]
     (div
-      {:style (merge layout/fullscreen layout/horizontal)}
-      (div {:style widget/row-divider})
-      (comp-debug store {:bottom 0, :max-width "100%", :left 0}))))
+      {}
+      (if (some? (:user store))
+        (div {} (comp-debug store nil))
+        (comp-login)))))
 
 (def comp-container (create-comp :container render))

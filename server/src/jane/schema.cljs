@@ -1,6 +1,14 @@
 
 (ns jane.schema)
 
-(def database {:states {}, :users {}})
+(def user {:name nil, :nickname nil, :id nil})
 
-(def state {:nickname nil, :user-id nil, :id nil})
+(def database
+ {:states {}, :teams {}, :messages {}, :groups {}, :users {}})
+
+(def state
+ {:router {:name :home, :data nil},
+  :nickname nil,
+  :user-id nil,
+  :notifications [],
+  :id nil})

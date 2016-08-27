@@ -1,7 +1,7 @@
 
 (ns jane.core
   (:require [respo.core :refer [render! clear-cache!]]
-            [jane.component.container :refer [comp-container]]
+            [jane.comp.container :refer [comp-container]]
             [cljs.reader :refer [read-string]]
             [cumulo-client.core :refer [send! setup-socket!]]))
 
