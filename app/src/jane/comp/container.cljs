@@ -7,9 +7,8 @@
             [respo.comp.debug :refer [comp-debug]]
             [respo-ui.style :as ui]
             [jane.comp.login :refer [comp-login]]
-            [jane.comp.chatroom :refer [comp-chatroom]]
             [jane.comp.portal :refer [comp-portal]]
-            [jane.comp.team :refer [comp-team]]))
+            [jane.comp.team :refer [comp-team  ]]))
 
 (defn render [store]
   (fn [state mutate!]
@@ -19,13 +18,12 @@
         (let [router (-> store :state :router)]
           (case
             (:name router)
-            :chatroom
-            (comp-chatroom store)
             :home
             (comp-portal store)
             :team
             (comp-team store)
             (comp-debug router nil)))
-        (comp-login)))))
+        (comp-login))
+      (comment comp-debug store nil))))
 
 (def comp-container (create-comp :container render))

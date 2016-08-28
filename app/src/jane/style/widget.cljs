@@ -1,6 +1,8 @@
 
 (ns jane.style.widget
-  (:require [hsl.core :refer [hsl]] [jane.style.layout :as layout]))
+  (:require [hsl.core :refer [hsl]]
+            [jane.style.layout :as layout]
+            [respo-ui.style :as ui]))
 
 (def message {:padding "4px 0"})
 
@@ -16,7 +18,7 @@
   :padding "0 8px",
   :text-decoration "none"})
 
-(def row-divider {:background-color (hsl 0 0 94), :width "2px"})
+(def row-divider {:background-color (hsl 0 0 90), :width "1px"})
 
 (def dim7 {:background-color (hsl 0 0 70)})
 
@@ -69,6 +71,8 @@
   :border "none"})
 
 (def card {:padding "20px"})
+
+(def button-small (merge ui/button {:line-height "24px"}))
 
 (def dim9 {:background-color (hsl 0 0 90)})
 

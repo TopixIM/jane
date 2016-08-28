@@ -3,7 +3,8 @@
   (:require [jane.updater.state :as state]
             [jane.updater.user :as user]
             [jane.updater.team :as team]
-            [jane.updater.router :as router]))
+            [jane.updater.router :as router]
+            [jane.updater.topic :as topic]))
 
 (defn default-handler [db op-data state-id op-id op-time] db)
 
@@ -20,6 +21,10 @@
                   team/create
                   :router/team
                   router/team
+                  :router/add-topic
+                  router/add-topic
+                  :topic/create
+                  topic/create
                   (do
                     (println "found no handler for" op)
                     default-handler))]
