@@ -12,3 +12,5 @@
   :user-id nil,
   :notifications [],
   :id nil})
+
+(def team {:name nil, :time nil, :id nil})

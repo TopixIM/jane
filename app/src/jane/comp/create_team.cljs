@@ -1,6 +1,7 @@
 
 (ns jane.comp.create-team
-  (:require [respo.alias :refer [create-comp div input]]
+  (:require [clojure.string :as string]
+            [respo.alias :refer [create-comp div input]]
             [respo-ui.style :as ui]
             [respo.comp.text :refer [comp-text]]
             [respo.comp.space :refer [comp-space]]
@@ -13,7 +14,9 @@
 
 (defn init-state [& args] "")
 
-(defn on-create [text] (fn [e dispatch!] (dispatch! :team/create text)))
+(defn on-create [text]
+  (fn [e dispatch!]
+    (if (not (string/blank? text)) (dispatch! :team/create text))))
 
 (defn render []
   (fn [state mutate!]

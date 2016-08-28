@@ -8,7 +8,8 @@
             [respo-ui.style :as ui]
             [jane.comp.login :refer [comp-login]]
             [jane.comp.chatroom :refer [comp-chatroom]]
-            [jane.comp.overview :refer [comp-overview]]))
+            [jane.comp.portal :refer [comp-portal]]
+            [jane.comp.team :refer [comp-team]]))
 
 (defn render [store]
   (fn [state mutate!]
@@ -21,7 +22,9 @@
             :chatroom
             (comp-chatroom store)
             :home
-            (comp-overview store)
+            (comp-portal store)
+            :team
+            (comp-team store)
             (comp-debug router nil)))
         (comp-login)))))
 
