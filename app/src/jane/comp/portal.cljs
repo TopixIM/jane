@@ -21,32 +21,32 @@
   :margin-bottom 8,
   :height 64})
 
-(defn render [store]
+(defn render [teams]
   (fn [state mutate!]
     (div
       {:style
        (merge ui/fullscreen {:background-color (hsl 200 80 90)})}
-      (let [teams (:teams store)]
-        (if (empty? teams)
-          (div
-            {:style (merge ui/column ui/card)}
-            (div {} (comp-text "There is no teams!" nil))
-            (comp-space nil "16px")
-            (comp-create-team))
+      (if (empty? teams)
+        (div
+          {:style (merge ui/column ui/card)}
+          (div {} (comp-text "There is no teams!" nil))
+          (comp-space nil "16px")
+          (comp-create-team))
+        (div
+          {}
           (div
             {}
-            (div
-              {}
-              (->>
-                teams
-                (map
-                  (fn [entry]
-                    (let [team (val entry) team-id (:id team)]
-                      [team-id
-                       (div
-                         {:style style-team,
-                          :event {:click (on-click team-id)}}
-                         (comp-text (:name team) nil))])))))
-            (comp-create-team)))))))
+            (->>
+              teams
+              (map
+                (fn [entry]
+                  (let [team (val entry) team-id (:id team)]
+                    [team-id
+                     (div
+                       {:style style-team,
+                        :event {:click (on-click team-id)}}
+                       (comp-text (:name team) nil))])))))
+          (comp-create-team)))
+      (comp-debug teams nil))))
 
 (def comp-portal (create-comp :portal render))

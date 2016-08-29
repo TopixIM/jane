@@ -8,6 +8,9 @@
             [hsl.core :refer [hsl]]
             [jane.style.widget :as widget]))
 
+(defn on-topic [topic-id]
+  (fn [e dispatch!] (dispatch! :router/topic topic-id)))
+
 (defn on-create [e dispatch!] (dispatch! :router/add-topic nil))
 
 (defn render-header []
@@ -20,8 +23,29 @@
 
 (def style-container {:min-width 320, :width "40%"})
 
-(defn render []
+(def style-topic
+ {:line-height 2,
+  :color (hsl 0 0 20),
+  :cursor "pointer",
+  :padding "0 8px"})
+
+(defn render [topics]
   (fn [state mutate!]
-    (div {:style style-container} (render-header) (div {}))))
+    (div
+      {:style style-container}
+      (render-header)
+      (div
+        {}
+        (->>
+          topics
+          (map
+            (fn [entry]
+              (let [[topic-id topic] entry]
+                [topic-id
+                 (div
+                   {:style style-topic,
+                    :event {:click (on-topic topic-id)}}
+                   (comp-text (:name topic) nil))])))))
+      (comment comp-debug topics nil))))
 
 (def comp-sidebar (create-comp :sidebar render))

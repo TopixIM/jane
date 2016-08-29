@@ -15,11 +15,11 @@
     (div
       {}
       (if (some? (:user store))
-        (let [router (-> store :state :router)]
+        (let [router (:router store)]
           (case
             (:name router)
             :home
-            (comp-portal store)
+            (comp-portal (get-in router [:data :teams]))
             :team
             (comp-team store)
             (comp-debug router nil)))

@@ -15,12 +15,12 @@
 
 (defn init-state [& args] "")
 
-(defn on-create [content mutate!]
+(defn on-create [content mutate! team-id]
   (fn [e dispatch!]
     (if (not (string/blank? content))
-      (do (println "create topic..." content) (mutate! "")))))
+      (do (dispatch! :topic/create [team-id content]) (mutate! "")))))
 
-(defn render [store]
+(defn render [team-id]
   (fn [state mutate!]
     (div
       {:style ui/card}
@@ -34,8 +34,10 @@
            :attrs {:placeholder "topic name", :value state}})
         (comp-space "8px" nil)
         (div
-          {:style ui/button, :event {:click (on-create state mutate!)}}
-          (comp-text "add" nil))))))
+          {:style ui/button,
+           :event {:click (on-create state mutate! team-id)}}
+          (comp-text "add" nil)))
+      (comment comp-debug team-id nil))))
 
 (def comp-add-topic
  (create-comp :add-topic init-state update-state render))

@@ -6,7 +6,7 @@
   (case
     (:name router)
     :home
-    router
+    (assoc router :data {:teams (:teams db)})
     :team
     (let [team-id (get router :params)]
       (-> router
@@ -18,7 +18,10 @@
              (:name router)
              :topic
              (let [topic-id (get router :params)]
-               (assoc router :data (get-in db [:topics topic-id])))
+               (assoc
+                 router
+                 :data
+                 (get-in db [:teams team-id :topics topic-id])))
              router)))))
     router))
 
@@ -27,8 +30,7 @@
         user-id (:user-id state)
         router (:router state)]
     {:router (render-router router state-id db),
-     :state state,
-     :teams (:teams db),
+     :state (dissoc state :router),
      :user (if (some? user-id) (get-in db [:users user-id]) nil)}))
 
 (defn render-scene [db] db)

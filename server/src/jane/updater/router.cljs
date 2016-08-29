@@ -13,3 +13,9 @@
     db
     [:states state-id :router]
     {:name :team, :params op-data}))
+
+(defn topic [db op-data state-id op-id op-time]
+  (-> db
+   (assoc-in
+     [:states state-id :router :router]
+     {:router nil, :name :topic, :params op-data})))

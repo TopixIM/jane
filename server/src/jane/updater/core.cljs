@@ -25,6 +25,8 @@
                   router/add-topic
                   :topic/create
                   topic/create
+                  :router/topic
+                  router/topic
                   (do
                     (println "found no handler for" op)
                     default-handler))]

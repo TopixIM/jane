@@ -7,12 +7,20 @@
             [respo.comp.debug :refer [comp-debug]]
             [hsl.core :refer [hsl]]))
 
-(def style-container {:background-color (hsl 0 0 80)})
+(def style-header {:background-color (hsl 0 0 70), :height 40})
 
-(defn render [store]
+(def style-container {:background-color (hsl 0 0 94)})
+
+(def style-control {:background-color (hsl 0 80 80), :height 200})
+
+(defn render [router]
   (fn [state mutate!]
     (div
-      {:style (merge ui/fullscreen ui/row style-container)}
-      (div {}))))
+      {:style (merge ui/flex ui/column style-container)}
+      (div
+        {:style style-header}
+        (comp-text (get-in router [:data :name]) nil))
+      (div {:style ui/flex})
+      (div {:style style-control}))))
 
 (def comp-chatroom (create-comp :chatroom render))

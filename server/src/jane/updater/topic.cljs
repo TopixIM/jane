@@ -2,7 +2,12 @@
 (ns jane.updater.topic)
 
 (defn create [db op-data state-id op-id op-time]
-  (assoc-in
-    db
-    [:topics op-id]
-    {:name op-data, :time op-time, :id op-id, :members (hash-set)}))
+  (let [[team-id team-name] op-data]
+    (assoc-in
+      db
+      [:teams team-id :topics op-id]
+      {:name team-name,
+       :time op-time,
+       :messages {},
+       :id op-id,
+       :member-ids {}})))
