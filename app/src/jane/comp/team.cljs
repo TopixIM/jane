@@ -15,7 +15,7 @@
   (fn [state mutate!]
     (let [router (:router store)
           team-id (:params router)
-          sub-router (:router router)]
+          sub-router (or (:router router) {})]
       (div
         {:style (merge ui/fullscreen ui/row)}
         (comp-sidebar
@@ -28,6 +28,6 @@
           :topic
           (comp-chatroom sub-router)
           (comp-debug sub-router nil))
-        (comp-debug sub-router nil)))))
+        (comment comp-debug sub-router nil)))))
 
 (def comp-team (create-comp :team render))
