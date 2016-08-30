@@ -2,7 +2,12 @@
 (ns jane.schema)
 
 (def message
- {:time nil, :id nil, :topic-id nil, :author-id nil, :text nil})
+ {:team-id nil,
+  :time nil,
+  :id nil,
+  :topic-id nil,
+  :author-id nil,
+  :text nil})
 
 (def user {:name nil, :nickname nil, :id nil})
 

@@ -6,7 +6,8 @@
     (assoc-in
       db
       [:teams team-id :topics op-id]
-      {:name team-name,
+      {:team-id team-id,
+       :name team-name,
        :time op-time,
        :messages {},
        :id op-id,

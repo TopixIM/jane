@@ -20,8 +20,16 @@
       (div
         {:style (merge ui/flex ui/column style-container)}
         (div {:style style-header} (comp-text (:name topic) nil))
-        (div {:style ui/flex})
-        (div {:style style-control} (comp-reply))
+        (div
+          {:style ui/flex}
+          (->>
+            (:messages topic)
+            (map
+              (fn [entry]
+                (let [[message-id message] entry]
+                  [message-id
+                   (div {} (comp-text (:text message)))])))))
+        (div {:style style-control} (comp-reply topic))
         (comment comp-debug topic nil)))))
 
 (def comp-chatroom (create-comp :chatroom render))

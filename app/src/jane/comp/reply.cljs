@@ -14,12 +14,15 @@
 
 (defn init-state [& args] "")
 
-(defn on-keydown [state mutate!]
+(defn on-keydown [state mutate! topic]
   (fn [e dispatch!]
     (if (and (= (:key-code e) 13) (.-metaKey (:original-event e)))
-      (do (mutate! "") (dispatch! :message/create state)))))
+      (do
+        (mutate! "")
+        (let [team-id (:team-id topic) topic-id (:id topic)]
+          (dispatch! :message/create [team-id topic-id state]))))))
 
-(defn render []
+(defn render [topic]
   (fn [state mutate!]
     (textarea
       {:style
@@ -29,7 +32,7 @@
           :width "100%",
           :height "100%"}),
        :event
-       {:keydown (on-keydown state mutate!),
+       {:keydown (on-keydown state mutate! topic),
         :input (on-input mutate!)},
        :attrs {:placeholder "reply...", :value state}})))
 
