@@ -6,11 +6,12 @@
             [respo.comp.space :refer [comp-space]]
             [respo.comp.debug :refer [comp-debug]]
             [hsl.core :refer [hsl]]
-            [jane.comp.reply :refer [comp-reply]]))
+            [jane.comp.reply :refer [comp-reply]]
+            [jane.comp.message :refer [comp-message]]))
 
-(def style-header {:background-color (hsl 0 0 70), :height 40})
+(def style-header {:background-color (hsl 0 0 90), :height 40})
 
-(def style-container {:background-color (hsl 0 0 94)})
+(def style-container {:background-color (hsl 0 0 96)})
 
 (def style-control {:background-color (hsl 0 80 80), :height 120})
 
@@ -27,8 +28,7 @@
             (map
               (fn [entry]
                 (let [[message-id message] entry]
-                  [message-id
-                   (div {} (comp-text (:text message)))])))))
+                  [message-id (comp-message message)])))))
         (div {:style style-control} (comp-reply topic))
         (comment comp-debug topic nil)))))
 

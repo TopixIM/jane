@@ -17,11 +17,25 @@
            (case
              (:name router)
              :topic
-             (let [topic-id (get router :params)]
-               (assoc
-                 router
-                 :data
-                 (get-in db [:teams team-id :topics topic-id])))
+             (let [topic-id (get router :params)
+                   topic (get-in db [:teams team-id :topics topic-id])
+                   messages (->>
+                              (:messages topic)
+                              (map
+                                (fn 
+                                  [entry]
+                                  (let 
+                                    [[message-id message] entry]
+                                    [message-id
+                                     (assoc
+                                       message
+                                       :author
+                                       (get-in
+                                         db
+                                         [:users
+                                          (:author-id message)]))])))
+                              (into {}))]
+               (assoc router :data (assoc topic :messages messages)))
              router)))))
     router))
 
