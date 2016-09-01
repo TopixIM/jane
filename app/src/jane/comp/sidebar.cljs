@@ -16,36 +16,52 @@
 (defn render-header []
   (div
     {:style (merge ui/row ui/card {:justify-content "space-between"})}
-    (comp-text "topics" nil)
+    (comp-text
+      "Topics"
+      {:color (hsl 0 0 80),
+       :font-size 24,
+       :font-weight "lighter",
+       :font-family "Helvetica Neue"})
     (div
       {:style (merge widget/button-small), :event {:click on-create}}
-      (comp-text "new" nil))))
+      (comp-text "+" nil))))
 
 (def style-container {:min-width 320, :width "40%"})
 
 (def style-topic
- {:line-height 2,
+ {:border-style "solid",
+  :line-height 2.4,
   :color (hsl 0 0 20),
+  :border-left-width 0,
   :cursor "pointer",
-  :padding "0 8px"})
+  :border-right-width 0,
+  :border-bottom-width "1px",
+  :border-top-width 0,
+  :padding "0 16px",
+  :border-color (hsl 0 0 90)})
 
-(defn render [topics]
+(defn render [router topics]
   (fn [state mutate!]
-    (div
-      {:style style-container}
-      (render-header)
+    (let [focused-topic (:params router)]
       (div
-        {}
-        (->>
-          topics
-          (map
-            (fn [entry]
-              (let [[topic-id topic] entry]
-                [topic-id
-                 (div
-                   {:style style-topic,
-                    :event {:click (on-topic topic-id)}}
-                   (comp-text (:name topic) nil))])))))
-      (comment comp-debug topics nil))))
+        {:style style-container}
+        (render-header)
+        (div
+          {}
+          (->>
+            topics
+            (map
+              (fn [entry]
+                (let [[topic-id topic] entry]
+                  [topic-id
+                   (div
+                     {:style
+                      (merge
+                        style-topic
+                        (if (= topic-id focused-topic)
+                          {:background-color (hsl 180 80 96)})),
+                      :event {:click (on-topic topic-id)}}
+                     (comp-text (:name topic) nil))])))))
+        (comment comp-debug router nil)))))
 
 (def comp-sidebar (create-comp :sidebar render))

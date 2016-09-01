@@ -19,6 +19,7 @@
       (div
         {:style (merge ui/fullscreen ui/row)}
         (comp-sidebar
+          sub-router
           (->> (get-in router [:data :team :topics]) (into {})))
         (div {:style widget/row-divider})
         (case

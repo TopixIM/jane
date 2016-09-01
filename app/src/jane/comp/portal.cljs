@@ -25,7 +25,10 @@
   (fn [state mutate!]
     (div
       {:style
-       (merge ui/fullscreen {:background-color (hsl 200 80 90)})}
+       (merge
+         ui/fullscreen
+         ui/card
+         {:background-color (hsl 200 80 90)})}
       (if (empty? teams)
         (div
           {:style (merge ui/column ui/card)}

@@ -7,20 +7,31 @@
             [respo.comp.debug :refer [comp-debug]]
             [hsl.core :refer [hsl]]
             [jane.comp.reply :refer [comp-reply]]
-            [jane.comp.message :refer [comp-message]]))
+            [jane.comp.message :refer [comp-message]]
+            [jane.style.widget :as widget]))
 
-(def style-header {:background-color (hsl 0 0 90), :height 40})
+(def style-header
+ {:align-items "center",
+  :color (hsl 0 0 60),
+  :font-size 24,
+  :font-weight "lighter",
+  :background-color (hsl 0 0 100),
+  :padding "0 16px",
+  :font-family "Helvetica Neue",
+  :height 60})
 
-(def style-container {:background-color (hsl 0 0 96)})
+(def style-container {:background-color (hsl 0 0 100)})
 
-(def style-control {:background-color (hsl 0 80 80), :height 120})
+(def style-control {:background-color (hsl 0 80 80), :height 80})
 
 (defn render [router]
   (fn [state mutate!]
     (let [topic (get router :data)]
       (div
         {:style (merge ui/flex ui/column style-container)}
-        (div {:style style-header} (comp-text (:name topic) nil))
+        (div
+          {:style (merge ui/row style-header)}
+          (comp-text (:name topic) nil))
         (div
           {:style ui/flex}
           (->>
@@ -29,6 +40,7 @@
               (fn [entry]
                 (let [[message-id message] entry]
                   [message-id (comp-message message)])))))
+        (div {:style widget/column-divider})
         (div {:style style-control} (comp-reply topic))
         (comment comp-debug topic nil)))))
 

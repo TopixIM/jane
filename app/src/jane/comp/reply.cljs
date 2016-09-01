@@ -16,11 +16,13 @@
 
 (defn on-keydown [state mutate! topic]
   (fn [e dispatch!]
-    (if (and (= (:key-code e) 13) (.-metaKey (:original-event e)))
-      (do
-        (mutate! "")
-        (let [team-id (:team-id topic) topic-id (:id topic)]
-          (dispatch! :message/create [team-id topic-id state]))))))
+    (let [event (:original-event e)]
+      (if (and (= (:key-code e) 13) (not (.-shift event)))
+        (do
+          (mutate! "")
+          (.preventDefault event)
+          (let [team-id (:team-id topic) topic-id (:id topic)]
+            (dispatch! :message/create [team-id topic-id state])))))))
 
 (defn render [topic]
   (fn [state mutate!]
@@ -30,6 +32,7 @@
          ui/input
          {:background-color (hsl 0 0 100),
           :width "100%",
+          :padding "16px",
           :height "100%"}),
        :event
        {:keydown (on-keydown state mutate! topic),

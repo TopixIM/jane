@@ -18,6 +18,9 @@
   :padding "0 8px",
   :text-decoration "none"})
 
+(def column-divider
+ {:background-color (hsl 0 0 90), :width "auto", :height "1px"})
+
 (def row-divider {:background-color (hsl 0 0 90), :width "1px"})
 
 (def dim7 {:background-color (hsl 0 0 70)})
